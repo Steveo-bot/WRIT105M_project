@@ -45,21 +45,15 @@
   }
 
   // ----------------------------------------------------------------------
-  // Fade-in reveal
+  // AOS (Animate On Scroll) initialization
   // ----------------------------------------------------------------------
-  var fadeItems = Array.prototype.slice.call(document.querySelectorAll('.fade-in'));
-  if ('IntersectionObserver' in window && !reduceMotion) {
-    var fadeObs = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          fadeObs.unobserve(entry.target);
-        }
-      });
-    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.12 });
-    fadeItems.forEach(function (el) { fadeObs.observe(el); });
-  } else {
-    fadeItems.forEach(function (el) { el.classList.add('is-visible'); });
+  if (window.AOS) {
+    AOS.init({
+      duration: 800,
+      easing: 'ease-out-cubic',
+      once: true,
+      offset: 100
+    });
   }
 
   // ----------------------------------------------------------------------
