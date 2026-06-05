@@ -32,7 +32,13 @@
   --ease-out:  cubic-bezier(.16, 1, .3, 1);
 }
 
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bone); }
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  background: var(--bone);
+  scrollbar-gutter: stable;
+  overflow-y: scroll;
+}
 
 body {
   font-family: var(--font-body);
@@ -527,6 +533,11 @@ a { color: var(--accent); text-underline-offset: .22em; }
   opacity: 1;
   transform: scale(1.0);
 }
+/* Fallback: ensure first layer shows if no .is-active */
+.scrolly__media:not(:has(.is-active)) .scrolly__media-layer:first-child {
+  opacity: 1;
+  transform: scale(1.0);
+}
 .scrolly__media::after {
   content: '';
   position: absolute; inset: 0; z-index: 2;
@@ -550,6 +561,10 @@ a { color: var(--accent); text-underline-offset: .22em; }
   width: var(--wide-w);
   margin-inline: auto;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+/* Two-column layout only for Natalie section with image */
+#natalie .scrolly__step-inner {
   grid-template-columns: 1fr 0.8fr;
   gap: 2rem;
   align-items: center;
@@ -569,7 +584,7 @@ a { color: var(--accent); text-underline-offset: .22em; }
   border-radius: 4px;
   box-shadow: 0 20px 60px -20px rgba(0,0,0,0.4);
 }
-.scrolly__step--right .scrolly__step-inner {
+#natalie .scrolly__step--right .scrolly__step-inner {
   grid-template-columns: 0.8fr 1fr;
 }
 .scrolly__step--right .scrolly__step-image {
@@ -898,6 +913,133 @@ a { color: var(--accent); text-underline-offset: .22em; }
 }
 
 /* =========================================================================
+   PILLAR HOUSE — image timeline
+   ========================================================================= */
+.pillar-section {
+  background: var(--ocean-1);
+  color: var(--foam);
+  padding: clamp(5rem, 10vh, 8rem) 0 clamp(6rem, 12vh, 10rem);
+}
+.pillar-section__intro {
+  width: var(--read-w);
+  margin-inline: auto;
+  text-align: center;
+  margin-bottom: clamp(4rem, 8vh, 6rem);
+}
+.pillar-section__intro .eyebrow {
+  margin-bottom: 1.6rem;
+  display: inline-block;
+}
+.pillar-section__intro h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1.12;
+  letter-spacing: -.025em;
+  color: #fff;
+  margin-bottom: 1.5rem;
+  text-wrap: balance;
+}
+.pillar-section__intro p {
+  font-size: clamp(1.02rem, 0.3vw + 1rem, 1.15rem);
+  line-height: 1.7;
+  color: rgba(216, 231, 238, 0.85);
+  margin-bottom: 1rem;
+}
+.pillar-section__tag {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.2rem, 2vw, 1.5rem) !important;
+  color: var(--accent) !important;
+  margin-top: 1.5rem !important;
+}
+
+.pillar-timeline {
+  width: var(--wide-w);
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(4rem, 8vh, 7rem);
+}
+.pillar-item {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+.pillar-item--reverse {
+  grid-template-columns: 1fr 1.1fr;
+}
+.pillar-item--reverse .pillar-item__figure {
+  order: 2;
+}
+.pillar-item__figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+.pillar-item__image {
+  width: 100%;
+  aspect-ratio: 4/3;
+  background-size: cover;
+  background-position: center;
+  border-radius: 4px;
+  box-shadow: 0 30px 60px -25px rgba(0,0,0,0.5);
+}
+.pillar-item__figure figcaption {
+  margin-top: .9rem;
+  font-family: var(--font-mono);
+  font-size: .7rem;
+  letter-spacing: .04em;
+  color: rgba(216, 231, 238, 0.6);
+  line-height: 1.5;
+}
+.pillar-item__text {
+  padding: 1rem 0;
+}
+.pillar-item__year {
+  font-family: var(--font-mono);
+  font-size: .75rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  padding-bottom: .7rem;
+  border-bottom: 1px solid rgba(216,231,238,0.18);
+  display: inline-block;
+}
+.pillar-item__text h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.5rem, 2.4vw, 2.2rem);
+  line-height: 1.18;
+  color: #fff;
+  margin-bottom: 1rem;
+  letter-spacing: -.02em;
+}
+.pillar-item__text h3 em {
+  font-style: italic;
+}
+.pillar-item__text p {
+  font-size: 1.02rem;
+  line-height: 1.7;
+  color: rgba(216, 231, 238, 0.85);
+}
+.pillar-item__text p + p {
+  margin-top: .9em;
+}
+
+@media (max-width: 800px) {
+  .pillar-item,
+  .pillar-item--reverse {
+    grid-template-columns: 1fr;
+  }
+  .pillar-item--reverse .pillar-item__figure {
+    order: 0;
+  }
+}
+
+/* =========================================================================
    11. ENDING / CREDITS
    ========================================================================= */
 .ending {
@@ -1149,7 +1291,13 @@ a { color: var(--accent); text-underline-offset: .22em; }
   padding: 0;
 }
 
-/* AOS animations handled by external library */
+/* Disable all AOS animations */
+[data-aos] {
+  opacity: 1 !important;
+  transform: none !important;
+  animation: none !important;
+  transition: none !important;
+}
 
 /* =========================================================================
    RESPONSIVE

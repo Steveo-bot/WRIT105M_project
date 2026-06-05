@@ -74,6 +74,9 @@
       });
     }
 
+    // Initialize: activate first step so background image shows immediately
+    activate(0);
+
     if ('IntersectionObserver' in window) {
       var obs = new IntersectionObserver(function (entries) {
         // find the most "in view" step
@@ -93,8 +96,6 @@
         threshold: [0, 0.25, 0.5, 0.75, 1]
       });
       steps.forEach(function (s) { obs.observe(s); });
-    } else {
-      activate(0);
     }
   });
 
